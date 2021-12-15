@@ -2,6 +2,8 @@
 // https://www.npmjs.com/package/dotenv
 require('dotenv/config');
 
+const path = require('path');
+
 // ℹ️ Connects to the database
 require('./db');
 
@@ -14,6 +16,10 @@ const express = require('express');
 const hbs = require('hbs');
 
 const app = express();
+app.disable('etag');
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', __dirname + '/views');
+app.set('view engine', 'hbs');
 
 // ℹ️ This function is getting exported from the config folder. It runs most middlewares
 require('./config')(app);
